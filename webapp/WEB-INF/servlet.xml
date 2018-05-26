@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<servlet-mapping>
+	<!-- 规则是以类名的小写字母开头做名字 -->
+	<servlet class="com.ajie.ex2.servlet.PrimitiveServlet" name="primitiveServlet"></servlet>
+</servlet-mapping>

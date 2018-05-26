@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -18,11 +17,11 @@ public class HttpServer {
 	/** 是否退出 */
 	private boolean shutdown = false;
 
-	public void await() {
+	public void await() throws ClassNotFoundException {
 		ServerSocket ss = null;
 		Socket socket = null;
 		try {
-			ss = new ServerSocket(9999, 1, InetAddress.getByName("192.168.0.50"));
+			ss = new ServerSocket(9999, 1, InetAddress.getByName("192.168.0.115"));
 			while (!shutdown) {
 				socket = ss.accept();
 				InputStream in = socket.getInputStream();
@@ -39,6 +38,8 @@ public class HttpServer {
 					StaticResourceProcessor staticResourceProcessor = new StaticResourceProcessor();
 					staticResourceProcessor.process(request, response);
 				}
+				in.close();
+				out.close();
 				socket.close();
 				shutdown = Constant.SHUTDOWN_COMMAND.equals(uri);
 			}
@@ -58,6 +59,10 @@ public class HttpServer {
 
 	public static void main(String[] args) {
 		HttpServer httpServer = new HttpServer();
-		httpServer.await();
+		try {
+			httpServer.await();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 }

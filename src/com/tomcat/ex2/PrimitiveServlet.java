@@ -1,24 +1,24 @@
 package com.tomcat.ex2;
 
-import java.io.IOException;
+/*import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.ServletResponse;*/
 
-public class PrimitiveServlet implements Servlet {
+public class PrimitiveServlet implements javax.servlet.Servlet {
 
-	public void init(ServletConfig config) throws ServletException {
+	public void init(javax.servlet.ServletConfig config) throws javax.servlet.ServletException {
 		System.out.println("init");
 	}
 
-	public void service(ServletRequest request, ServletResponse response) throws ServletException,
-			IOException {
+	public void service(javax.servlet.ServletRequest request, javax.servlet.ServletResponse response) throws javax.servlet.ServletException,
+			java.io.IOException {
 		System.out.println("from service");
-		PrintWriter out = response.getWriter();
+		java.io.PrintWriter out = response.getWriter();
 		out.println("Hello. Roses are red.");
 		out.print("Violets are blue.");
 	}
@@ -31,7 +31,7 @@ public class PrimitiveServlet implements Servlet {
 		return null;
 	}
 
-	public ServletConfig getServletConfig() {
+	public javax.servlet.ServletConfig getServletConfig() {
 		return null;
 	}
 

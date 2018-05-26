@@ -5,6 +5,7 @@ import java.net.URLClassLoader;
 import java.net.URLStreamHandler;
 import java.io.File;
 import java.io.IOException;
+
 import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -33,7 +34,8 @@ public class ServletProcessor1 {
     catch (IOException e) {
       System.out.println(e.toString() );
     }
-    Class myClass = null;
+    @SuppressWarnings("rawtypes")
+	Class myClass = null;
     try {
       myClass = loader.loadClass(servletName);
     }

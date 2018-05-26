@@ -34,63 +34,19 @@ public class Response implements HttpServletResponse {
 	 * 发送静态资源
 	 */
 	public void sendStaticResource() {
-		String path = Constant.ROOT_PATH + request.getUri();
-		File file = new File(path);
-		FileInputStream in = null;
-		StringBuffer sb = new StringBuffer();
 		try {
-			in = new FileInputStream(file);
-			byte[] buf = new byte[Request.BUFFER_SIZE];
-
-			sb.append("HTTP/1.1 200\r\n");
-			sb.append("Content-Type: text/html\r\n");
-			int n = 0;
-			do {
-				try {
-					n = in.read(buf, 0, Request.BUFFER_SIZE);
-					sb.append(new String(buf));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			} while (n > -1);
-			sb.append("\r\n");
-			out.write(sb.toString().getBytes());
-			out.flush();
-		} catch (FileNotFoundException e) {
-			String errorMes = "HTTP/1.1 404 file not found\r\n <h1>文件不存在</h1>";
-			try {
-				out.write(errorMes.getBytes());
-				out.flush();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			sb = null;
-			try {
-				if (null != in)
-					in.close();
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-		/*try {
 			File file = new File(Constant.ROOT_PATH + request.getUri());
 			FileInputStream fis = null;
 			if (file.exists()) {
 				fis = new FileInputStream(file);
 				StringBuffer sb = new StringBuffer();
-				sb.append("HTTP/1.1 200\r\n");// 先吧头部放进去
-				sb.append("Content-Type: text/x-html\r\n");
+				sb.append("HTTP/1.1 200\r\n\r\n");// 先吧头部放进去 注意 头和内容间要有两个换行
 				byte[] buf = new byte[2048];
 				int n = 0;
 				do {
 					n = fis.read(buf);
 					sb.append(new String(buf));
-				} while (n != -1);
+				} while (n == 2048);
 				out.write(sb.toString().getBytes());
 				out.flush();
 			} else {
@@ -111,7 +67,7 @@ public class Response implements HttpServletResponse {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}*/
+		}
 
 	}
 
